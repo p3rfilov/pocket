@@ -1,22 +1,36 @@
-from PyQt5.QtWidgets import QListWidgetItem, QWidget, QLabel, QPushButton, QHBoxLayout, QLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QLayout, QTextEdit
 
 class dataWidget(QWidget):
-    def __init__(self, paramDict):
+    def __init__(self, data={}):
         super().__init__()
         self.params =   {
-                        'title':'None',
+                        'title':'New Note',
                         'expanded':'False',
                         'data':'None'
                         }
-        self.params.update(paramDict)
+        self.params.update(data)
         
-        self.listItem = QListWidgetItem()
         self.title = QLabel(self.params['title'])
-        self.button = QPushButton(self.params['data'])
-        self.layout = QHBoxLayout()
-        self.layout.addWidget(self.title)
-        self.layout.addWidget(self.button)
-        self.layout.addStretch()
-        self.layout.setSizeConstraint(QLayout.SetFixedSize)
-        self.setLayout(self.layout)  
-        self.listItem.setSizeHint(self.sizeHint())
+        
+        self.button = QPushButton('-')
+        self.button.setMaximumSize(17, 17)
+        self.button.clicked.connect(self.setTextHidden)
+        
+        self.textEdit = QTextEdit(self.params['data'])
+        self.textEdit.hide()
+        
+        self.layout1 = QVBoxLayout()
+        self.layout2 = QHBoxLayout()
+        self.layout2.addWidget(self.title)
+        self.layout2.addStretch()
+        self.layout2.addWidget(self.button)
+        self.layout1.addLayout(self.layout2)
+        self.layout1.addWidget(self.textEdit)
+        self.layout2.setSizeConstraint(QLayout.SetFixedSize)
+        self.setLayout(self.layout1)
+        
+    def setTextHidden(self):
+        if self.textEdit.isHidden():
+            self.textEdit.show()
+        else:
+            self.textEdit.hide()

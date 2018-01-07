@@ -21,4 +21,6 @@ class mainWindow(QMainWindow):
             self.ui.list_items.addItem(self.listItem)
             self.ui.list_items.setItemWidget(self.listItem, self.widget)
             
+        
+            
             
