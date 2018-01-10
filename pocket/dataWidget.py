@@ -36,25 +36,16 @@ class dataWidget(QWidget):
         self.layout2.setSizeConstraint(QLayout.SetFixedSize)
         self.setLayout(self.layout1)
         
-        
-    def toggleWidgetTextField(self, hide=False):
-        if not hide:
-            if self.textEdit.isHidden():
-                self.textEdit.show()
-                self.delButton.show()
-                self.editButton.show()
-                self.resize(QtCore.QSize(0,0))
-                #self.resize(QtCore.QSize(self.sizeHint().width(), self.heightMax))
-            else:
-                self.textEdit.hide()
-                self.delButton.hide()
-                self.editButton.hide()
-                self.resize(QtCore.QSize(0,0))
-                #self.resize(QtCore.QSize(self.sizeHint().width(), self.heightMin))
+    def toggleWidgetTextField(self, setHidden=False):
+        if not setHidden and self.textEdit.isHidden():
+            self.textEdit.show()
+            self.delButton.show()
+            self.editButton.show()
         else:
             self.textEdit.hide()
             self.delButton.hide()
             self.editButton.hide()
+        self.resize(QtCore.QSize(0,0))
             
     def setTitle(self, title):
         self.title.setText(title)

@@ -36,7 +36,7 @@ class mainWindow(QMainWindow):
             if row != self.ui.list_items.currentRow():
                 item = self.ui.list_items.item(row)
                 widget = self.ui.list_items.itemWidget(item)
-                widget.toggleWidgetTextField(hide=True)
+                widget.toggleWidgetTextField(setHidden=True)
                 item.setSizeHint(widget.sizeHint())
         
     def removeRow(self):
