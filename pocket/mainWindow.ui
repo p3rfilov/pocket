@@ -96,7 +96,11 @@
      </layout>
     </item>
     <item>
-     <widget class="QListWidget" name="list_items"/>
+     <widget class="QListWidget" name="list_items">
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
