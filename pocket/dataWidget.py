@@ -1,23 +1,37 @@
+import sys
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QLayout, QTextEdit
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication
 
 class dataWidget(QWidget):
     def __init__(self):
         super().__init__()
         self.defaults = {'title':'New Note', 'data':'None'}
+        self.editState = False
         #self.heightMin = 35
         #self.heightMax = 100
         #self.resize(QtCore.QSize(self.sizeHint().width(), self.heightMin))
         
         self.title = QLabel(self.defaults['title'])
+        
         self.delButton = QPushButton('x')
         self.delButton.setMaximumSize(17, 17)
         self.delButton.hide()
+        
         self.textEdit = QTextEdit(self.defaults['data'])
         self.textEdit.hide()
+        
         self.editButton = QPushButton('edit')
-        self.editButton.setMaximumSize(35, 20)
+        self.editButton.setMaximumSize(45, 20)
         self.editButton.hide()
+        
+        self.okButton = QPushButton('ok')
+        self.okButton.setMaximumSize(45, 20)
+        self.okButton.hide()
+        
+        self.cancelButton = QPushButton('cancel')
+        self.cancelButton.setMaximumSize(45, 20)
+        self.cancelButton.hide()
         
         self.layout1 = QVBoxLayout()
         self.layout2 = QHBoxLayout()
@@ -29,6 +43,8 @@ class dataWidget(QWidget):
         
         self.layout3.addStretch()
         self.layout3.addWidget(self.editButton)
+        self.layout3.addWidget(self.okButton)
+        self.layout3.addWidget(self.cancelButton)
         
         self.layout1.addLayout(self.layout2)
         self.layout1.addWidget(self.textEdit)
@@ -52,5 +68,31 @@ class dataWidget(QWidget):
         
     def setData(self, data):
         self.textEdit.setText(data)
+        
+    def getTitle(self):
+        return self.title.text()
+    
+    def getData(self):
+        return self.textEdit.toPlainText()
+    
+    def setEditState(self, state):
+        if state:
+            self.editButton.hide()
+            self.okButton.show()
+            self.cancelButton.show()
+        else:
+            self.editButton.show()
+            self.okButton.hide()
+            self.cancelButton.hide()
+            
+    def getEditState(self):
+        return self.editState
+    
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = dataWidget()
+    window.show()
+    window.toggleWidgetTextField(setHidden=False)
+    sys.exit(app.exec_())
         
     
