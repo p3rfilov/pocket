@@ -6,6 +6,7 @@ from pocket.ui_mainWindow import mainWindow
 
 '''
 TO DO:
+
 Replace direct access to mainWindow components (self.window.ui.list_items) with function calls
 '''
 
