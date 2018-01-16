@@ -1,7 +1,13 @@
 import unittest
 import sys
 from PyQt5.QtWidgets import QApplication
-from pocket.mainWindow import mainWindow
+from pocket.ui_dataWidget import dataWidget
+from pocket.ui_mainWindow import mainWindow
+
+'''
+TO DO:
+Replace direct access to mainWindow components (self.window.ui.list_items) with function calls
+'''
 
 class TestUI(unittest.TestCase):
 
@@ -20,7 +26,10 @@ class TestUI(unittest.TestCase):
     def test_AddNewPocket(self):
         for i in range(20):
             data = {'name':'Note ' + str(i),'data':str(i)*200}
-            self.window.addNewPocket(data)
+            widget = dataWidget()
+            widget.setTitle(data['name'])
+            widget.setData(data['data'])
+            self.window.addNewRow(widget)
         self.RUN_LOOP()
             
     def test_CheckPocketParameters(self):

@@ -1,7 +1,5 @@
-import sys
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QLayout, QTextEdit
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication
 
 class dataWidget(QWidget):
     def __init__(self):
@@ -89,6 +87,9 @@ class dataWidget(QWidget):
         return self.editState
     
 if __name__ == '__main__':
+    import sys
+    from PyQt5.QtWidgets import QApplication
+    
     app = QApplication(sys.argv)
     window = dataWidget()
     window.show()

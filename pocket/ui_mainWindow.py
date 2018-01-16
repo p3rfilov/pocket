@@ -1,33 +1,23 @@
 import os
-import sys
 from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QListWidget
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication
-from dataWidget import dataWidget
 
 class mainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uiDir = os.path.dirname(__file__)
-        uiFile = os.path.join(uiDir, 'mainWindow.ui')
+        uiFile = os.path.join(uiDir, 'ui_mainWindow.ui')
         self.ui = loadUi(uiFile)
         self.ui.show()
         
         self.ui.list_items.setSizeAdjustPolicy(QListWidget.AdjustToContents)
         self.ui.list_items.itemClicked.connect(self.expandCurrentItem)
         
-    def addNewPocket(self, params):
-        widget = dataWidget()
-        widget.setTitle(params['name'])
-        widget.setData(params['data'])
+    def addNewRow(self, widget):
         listItem = QListWidgetItem()
         listItem.setSizeHint(widget.sizeHint())
         self.ui.list_items.addItem(listItem)
         self.ui.list_items.setItemWidget(listItem, widget)
-        
-        widget.delButton.clicked.connect(self.removeRow)
-        widget.editButton.clicked.connect(lambda: widget.setEditState(True))
-        widget.cancelButton.clicked.connect(lambda: widget.setEditState(False))
         
     def expandCurrentItem(self):
         self.closeInactiveItems()
@@ -51,6 +41,9 @@ class mainWindow(QMainWindow):
               
 
 if __name__ == '__main__':
+    import sys
+    from PyQt5.QtWidgets import QApplication
+    
     app = QApplication(sys.argv)
     window = mainWindow()
     sys.exit(app.exec_())
