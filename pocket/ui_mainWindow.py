@@ -21,22 +21,42 @@ class mainWindow(QMainWindow):
         
     def expandCurrentItem(self):
         self.closeInactiveItems()
-        item = self.ui.list_items.currentItem()
-        widget = self.ui.list_items.itemWidget(item)
+        item = self.getCurrentItem()
+        widget = self.getItemWidget(item)
         widget.toggleWidgetTextField()
         item.setSizeHint(widget.sizeHint())
         
     def closeInactiveItems(self):
-        count = self.ui.list_items.count()
+        count = self.getRowCount()
         for row in range(count):
-            if row != self.ui.list_items.currentRow():
-                item = self.ui.list_items.item(row)
-                widget = self.ui.list_items.itemWidget(item)
+            if row != self.getCurrentRow():
+                item = self.getItem(row)
+                widget = self.getItemWidget(item)
                 widget.toggleWidgetTextField(setHidden=True)
                 item.setSizeHint(widget.sizeHint())
     
-    def removeRow(self):
-        row = self.ui.list_items.currentRow()
+    def getCurrentWidget(self):
+        item = self.getCurrentItem()
+        widget = self.getItemWidget(item)
+        return widget
+                
+    def getRowCount(self):
+        return self.ui.list_items.count()
+    
+    def getCurrentRow(self):
+        return self.ui.list_items.currentRow()
+    
+    def getCurrentItem(self):
+        return self.ui.list_items.currentItem()
+    
+    def getItem(self, row):
+        return self.ui.list_items.item(row)
+    
+    def getItemWidget(self, item):
+        return self.ui.list_items.itemWidget(item)
+    
+    def removeCurrentRow(self):
+        row = self.getCurrentRow()
         self.ui.list_items.takeItem(row)
               
 

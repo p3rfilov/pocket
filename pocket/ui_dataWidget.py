@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QLayout, QTextEdit
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtGui
 
 class dataWidget(QWidget):
     def __init__(self):
@@ -12,8 +12,11 @@ class dataWidget(QWidget):
         
         self.title = QLabel(self.defaults['title'])
         
-        self.delButton = QPushButton('x')
-        self.delButton.setMaximumSize(17, 17)
+        self.delButton = QPushButton('')
+        self.delButton.setMaximumSize(20, 20)
+        self.delButton.setIcon(QtGui.QIcon('../images/del Button.png'))
+        self.delButton.setIconSize(QtCore.QSize(20,20))
+        self.delButton.setFlat(True)
         self.delButton.hide()
         
         self.textEdit = QTextEdit(self.defaults['data'])
@@ -74,6 +77,7 @@ class dataWidget(QWidget):
         return self.textEdit.toPlainText()
     
     def setEditState(self, state):
+        self.editState = state
         if state:
             self.editButton.hide()
             self.okButton.show()
