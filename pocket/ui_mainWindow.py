@@ -16,14 +16,15 @@ class mainWindow(QMainWindow):
     def addNewRow(self, widget):
         listItem = QListWidgetItem()
         listItem.setSizeHint(widget.sizeHint())
-        self.ui.list_items.addItem(listItem)
+        self.ui.list_items.insertItem(0, listItem)
+        self.setCurrentRow(0)
         self.ui.list_items.setItemWidget(listItem, widget)
         
     def expandCurrentItem(self):
         self.closeInactiveItems()
         item = self.getCurrentItem()
         widget = self.getItemWidget(item)
-        widget.toggleWidgetTextField()
+        widget.toggleWidgetTextField() # ui_dataWidget method
         item.setSizeHint(widget.sizeHint())
         
     def closeInactiveItems(self):
@@ -32,7 +33,7 @@ class mainWindow(QMainWindow):
             if row != self.getCurrentRow():
                 item = self.getItem(row)
                 widget = self.getItemWidget(item)
-                widget.toggleWidgetTextField(setHidden=True)
+                widget.toggleWidgetTextField(setHidden=True) # ui_dataWidget method
                 item.setSizeHint(widget.sizeHint())
     
     def getCurrentWidget(self):
@@ -46,6 +47,9 @@ class mainWindow(QMainWindow):
     def getCurrentRow(self):
         return self.ui.list_items.currentRow()
     
+    def setCurrentRow(self, row):
+        self.ui.list_items.setCurrentRow(row)
+    
     def getCurrentItem(self):
         return self.ui.list_items.currentItem()
     
@@ -58,6 +62,12 @@ class mainWindow(QMainWindow):
     def removeCurrentRow(self):
         row = self.getCurrentRow()
         self.ui.list_items.takeItem(row)
+        
+    def getNewNameText(self):
+        return self.ui.newName.text()
+    
+    def clearNewNameText(self):
+        self.ui.newName.setText('')
               
 
 if __name__ == '__main__':

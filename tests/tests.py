@@ -11,7 +11,7 @@ class TestUI(unittest.TestCase):
     def setUp(self):
         self.app = QApplication(sys.argv)
         self.window = mainWindow()
-        self.data = {'title':'Note ','data':'Some text '}
+        self.data = {'name':'Note ','data':'Some text '}
         self.cycles = 10
         
     def RUN_LOOP(self):
@@ -34,8 +34,8 @@ class TestUI(unittest.TestCase):
         self.assertTrue(widget.delButton.isHidden())
         self.assertTrue(widget.editButton.isHidden())
         
-        widget.setTitle(self.data['title'])
-        self.assertEqual(widget.getTitle(), self.data['title'])
+        widget.setName(self.data['name'])
+        self.assertEqual(widget.getName(), self.data['name'])
         widget.setData(self.data['data'])
         self.assertEqual(widget.getData(), self.data['data'])
         
@@ -56,7 +56,7 @@ class TestUI(unittest.TestCase):
     def testAddNewPocket(self):
         for i in range(self.cycles):
             self.widget = dataWidget()
-            self.widget.setTitle(self.data['title'] + str(i))
+            self.widget.setName(self.data['name'] + str(i))
             self.widget.setData(self.data['data'] + str(i))
             self.window.addNewRow(self.widget)
 #         self.RUN_LOOP()
@@ -66,7 +66,7 @@ class TestUI(unittest.TestCase):
         for row in range(count):
             item = self.window.getItem(row)
             widget = self.window.getItemWidget(item)
-            self.assertEqual(widget.getTitle(), self.data['title'] + str(row))
+            self.assertEqual(widget.getTitle(), self.data['name'] + str(row))
             self.assertEqual(widget.getData(), self.data['data'] + str(row))
             
             

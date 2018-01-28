@@ -4,39 +4,65 @@ from collections import namedtuple
 
 class dataStore():
     '''This class provides the data storage and retrieval interface.'''
-    def __init__(self, location, columns):
+    def __init__(self, location, fields):
         self.location = str(location)
-        self.columns = columns
-        self.currentRecord = None
+        self.fields = fields
+        self.connection = None
+        self.cursor = None
         
-        if self.locationExists():
+        if os.path.exists(self.location):
             self.getAllData()
-        else: self.createNew()
-    
-    def locationExists(self):
-        return os.path.exists(self.location)
-    
-    def createNew(self):
-        if True:
-            pass
         else:
-            print('Could not create database at ' + self.location)
-            self.location = None
+            self.createNewDB()
     
-    def setCurrentRecord(self, name):
-        if name in self.columns:
-            self.currentRecord = name
-        else:
-            self.currentRecord = None
-            print('No such record found!')
+    def createNewDB(self):
+        self.connect()
+        self.execute( "CREATE TABLE Pockets ({f} TEXT NOT NULL UNIQUE)"\
+                      .format(f=self.fields[0]) )
+        for field in self.fields[1:]:
+            self.execute( "ALTER TABLE Pockets ADD COLUMN {f} TEXT"\
+                          .format(f=field) )
+
+    def connect(self):
+        self.connection = sqlite3.connect(self.location)
+        self.connection.isolation_level = None # auto-commit mode
+        self.cursor = self.connection.cursor()
+        
+    def disconnect(self):
+        self.connection.close()
+
+    def execute(self, command):
+        self.cursor.execute(command)
+
+    def createRecord(self, name):
+        try:
+            self.execute( "INSERT INTO Pockets ({f}) VALUES ('{n}')"\
+                          .format(f=self.fields[0], n=name) )
+            return True
+        except:
+            print('Name already exists!')
+            return False
     
-    def readFrom(self, column):
-        if self.currentRecord:
-            pass
+    def deleteRecord(self, name):
+        try:
+            
+            self.execute("DELETE FROM Pockets WHERE {f} = '{n}'"\
+                         .format(f=self.fields[0], n=name) )
+            return True
+        except:
+            print('Could not delete record!')
+            return False
     
-    def writeTo(self, column):
-        if self.currentRecord:
-            pass
+    def readFrom(self, name):
+        pass
+    
+    def writeTo(self, name):
+        pass
         
     def getAllData(self):
-        pass
+        self.connect()
+        self.execute("SELECT * FROM Pockets")
+        data = self.cursor.fetchall()
+        packedData = [dict(zip(self.fields, pocket)) for pocket in data]
+        return packedData
+        
