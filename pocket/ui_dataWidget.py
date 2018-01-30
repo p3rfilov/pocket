@@ -67,13 +67,13 @@ class dataWidget(QWidget):
     def setName(self, name):
         self.name.setText(name)
         
-    def setData(self, data):
+    def setNotes(self, data):
         self.textEdit.setText(data)
         
     def getName(self):
         return self.name.text()
     
-    def getData(self):
+    def getNotes(self):
         return self.textEdit.toPlainText()
     
     def setEditState(self, state):

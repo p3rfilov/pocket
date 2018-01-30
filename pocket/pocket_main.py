@@ -12,8 +12,11 @@ class Settings():
 
 class pocket_main():
     def __init__(self):
+        self.tempData = None
+        
         self.window = mainWindow()
         self.window.ui.btn_addPocket.clicked.connect(self.addNewPocket)
+        self.window.ui.newName.returnPressed.connect(self.addNewPocket)
         self.window.ui.search.textChanged.connect(self.searchText)
         
         self.checkAndPopulateAppFolder()
@@ -37,17 +40,18 @@ class pocket_main():
             result = self.dataStore.createRecord(name)
             if result:
                 self.addPocket({'name':name,'data':None})
-                self.window.expandCurrentItem()
-                self.window.getCurrentWidget().setEditState(True)
                 self.window.clearNewNameText()
+                self.window.expandCurrentItem()
+                self.beginEditSession()
         
     def addPocket(self, params):
         widget = dataWidget()
         widget.setName(params['name'])
-        widget.setData(params['data'])
+        widget.setNotes(params['data'])
         widget.delButton.clicked.connect(self.deletePocket)
         widget.editButton.clicked.connect(self.beginEditSession)
         widget.cancelButton.clicked.connect(self.endEditSession)
+        widget.okButton.clicked.connect(lambda: self.endEditSession(commit=True))
         self.window.addNewRow(widget)
         
     def deletePocket(self):
@@ -56,12 +60,18 @@ class pocket_main():
             self.window.removeCurrentRow()
             
     def beginEditSession(self):
-        widget = self.window.getCurrentWidget()
-        widget.setEditState(True)
+        self.tempData = self.window.getCurrentWidget().getNotes()
+        self.window.getCurrentWidget().setEditState(True)
         
-    def endEditSession(self):
-        widget = self.window.getCurrentWidget()
-        widget.setEditState(False)
+    def endEditSession(self, commit=False):
+        if commit:
+            name = self.window.getCurrentWidget().getName()
+            notes = self.window.getCurrentWidget().getNotes()
+            data = self.dataStore.packData((name,notes))
+            self.dataStore.write(data)
+        else:
+            self.window.getCurrentWidget().setNotes(self.tempData)
+        self.window.getCurrentWidget().setEditState(False)
         
     def searchText(self):
         pass

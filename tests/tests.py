@@ -36,8 +36,8 @@ class TestUI(unittest.TestCase):
         
         widget.setName(self.data['name'])
         self.assertEqual(widget.getName(), self.data['name'])
-        widget.setData(self.data['data'])
-        self.assertEqual(widget.getData(), self.data['data'])
+        widget.setNotes(self.data['data'])
+        self.assertEqual(widget.getNotes(), self.data['data'])
         
         widget.setEditState(True)
         self.assertTrue(widget.editButton.isHidden())
@@ -57,7 +57,7 @@ class TestUI(unittest.TestCase):
         for i in range(self.cycles):
             self.widget = dataWidget()
             self.widget.setName(self.data['name'] + str(i))
-            self.widget.setData(self.data['data'] + str(i))
+            self.widget.setNotes(self.data['data'] + str(i))
             self.window.addNewRow(self.widget)
 #         self.RUN_LOOP()
             
@@ -67,7 +67,7 @@ class TestUI(unittest.TestCase):
             item = self.window.getItem(row)
             widget = self.window.getItemWidget(item)
             self.assertEqual(widget.getTitle(), self.data['name'] + str(row))
-            self.assertEqual(widget.getData(), self.data['data'] + str(row))
+            self.assertEqual(widget.getNotes(), self.data['data'] + str(row))
             
             
 class testDataStore(unittest.TestCase):

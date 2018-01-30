@@ -7,19 +7,19 @@ class dataStore():
     def __init__(self, location, fields):
         self.location = str(location)
         self.fields = fields
+        self.head = fields[0]
+        self.tail = fields[1:]
         self.connection = None
         self.cursor = None
         
-        if os.path.exists(self.location):
-            self.getAllData()
-        else:
+        if not os.path.exists(self.location):
             self.createNewDB()
     
     def createNewDB(self):
         self.connect()
         self.execute( "CREATE TABLE Pockets ({f} TEXT NOT NULL UNIQUE)"\
-                      .format(f=self.fields[0]) )
-        for field in self.fields[1:]:
+                      .format(f=self.head) )
+        for field in self.tail:
             self.execute( "ALTER TABLE Pockets ADD COLUMN {f} TEXT"\
                           .format(f=field) )
 
@@ -37,7 +37,7 @@ class dataStore():
     def createRecord(self, name):
         try:
             self.execute( "INSERT INTO Pockets ({f}) VALUES ('{n}')"\
-                          .format(f=self.fields[0], n=name) )
+                          .format(f=self.head, n=name) )
             return True
         except:
             print('Name already exists!')
@@ -46,23 +46,32 @@ class dataStore():
     def deleteRecord(self, name):
         try:
             
-            self.execute("DELETE FROM Pockets WHERE {f} = '{n}'"\
-                         .format(f=self.fields[0], n=name) )
+            self.execute("DELETE FROM Pockets WHERE {f}='{n}'"\
+                         .format(f=self.head, n=name) )
             return True
         except:
             print('Could not delete record!')
             return False
     
     def readFrom(self, name):
-        pass
+        data = self.execute("SELECT * FROM Pockets WHERE {f}='{n}'"\
+                            .format(f=self.head, n=name) )
+        return self.unpackData(data)
     
-    def writeTo(self, name):
-        pass
+    def write(self, data):
+        for field in self.tail:
+            self.execute("UPDATE Pockets SET {key}='{val}' WHERE {f}='{n}'"\
+                         .format(key=field, val=data[field], f=self.head, n=data[self.head]) )
         
     def getAllData(self):
         self.connect()
         self.execute("SELECT * FROM Pockets")
         data = self.cursor.fetchall()
-        packedData = [dict(zip(self.fields, pocket)) for pocket in data]
-        return packedData
+        return self.unpackData(data)
+    
+    def unpackData(self, data):
+        return [dict(zip(self.fields, pocket)) for pocket in data]
+    
+    def packData(self, data):
+        return dict(zip(self.fields, data))
         
