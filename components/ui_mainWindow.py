@@ -5,9 +5,8 @@ from PyQt5.uic import loadUi
 class mainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uiDir = os.path.dirname(__file__)
-        uiFile = os.path.join(uiDir, 'ui_mainWindow.ui')
-        self.ui = loadUi(uiFile)
+        self.dir = os.path.dirname(__file__)
+        self.ui = loadUi(os.path.join(self.dir, 'ui_mainWindow.ui'))
         self.ui.show()
         
         self.ui.list_items.setSizeAdjustPolicy(QListWidget.AdjustToContents)
