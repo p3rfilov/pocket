@@ -1,9 +1,9 @@
 import unittest
 import sys
 from PyQt5.QtWidgets import QApplication
-from pocket.ui_dataWidget import dataWidget
-from pocket.ui_mainWindow import mainWindow
-from pocket.dataStore import dataStore
+from components.ui_dataWidget import dataWidget
+from components.ui_mainWindow import mainWindow
+from components.dataStore import dataStore
 
 
 class TestUI(unittest.TestCase):
@@ -59,7 +59,7 @@ class TestUI(unittest.TestCase):
             self.widget.setName(self.data['name'] + str(i))
             self.widget.setNotes(self.data['data'] + str(i))
             self.window.addNewRow(self.widget)
-#         self.RUN_LOOP()
+        self.RUN_LOOP()
             
     def testCheckPocketParameters(self):
         count = self.window.getRowCount()

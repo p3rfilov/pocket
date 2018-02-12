@@ -59,9 +59,10 @@ class dataStore():
         return self.unpackData(data)
     
     def write(self, data):
+        pData = self.packData(data)
         for field in self.tail:
             self.execute("UPDATE Pockets SET {key}='{val}' WHERE {f}='{n}'"\
-                         .format(key=field, val=data[field], f=self.head, n=data[self.head]) )
+                         .format(key=field, val=pData[field], f=self.head, n=pData[self.head]) )
         
     def getAllData(self):
         self.connect()

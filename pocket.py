@@ -1,7 +1,7 @@
 import os
-from ui_dataWidget import dataWidget
-from ui_mainWindow import mainWindow
-from dataStore import dataStore
+from components.ui_dataWidget import dataWidget
+from components.ui_mainWindow import mainWindow
+from components.dataStore import dataStore
 
 class Settings():
     appName = 'pocket'
@@ -67,14 +67,20 @@ class pocket_main():
         if commit:
             name = self.window.getCurrentWidget().getName()
             notes = self.window.getCurrentWidget().getNotes()
-            data = self.dataStore.packData((name,notes))
-            self.dataStore.write(data)
+            self.dataStore.write((name,notes))
         else:
             self.window.getCurrentWidget().setNotes(self.tempData)
         self.window.getCurrentWidget().setEditState(False)
         
     def searchText(self):
-        pass
+        for row in range(self.window.getRowCount()):
+            item = self.window.getItem(row)
+            widget = self.window.getItemWidget(item)
+            notes = widget.getNotes()
+            if not self.window.ui.search.text() in notes:
+                item.setHidden(True)
+            else:
+                item.setHidden(False)
     
     def saveRowOrder(self):
         pass

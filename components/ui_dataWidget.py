@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QLayout, QTextEdit
 from PyQt5 import QtCore, QtGui
 
@@ -6,12 +7,13 @@ class dataWidget(QWidget):
         super().__init__()
         self.defaults = {'name':'New Note', 'data':'None'}
         self.editState = False
+        self.dir = os.path.dirname(__file__)
         
         self.name = QLabel(self.defaults['name'])
         
         self.delButton = QPushButton('')
         self.delButton.setMaximumSize(23, 23)
-        self.delButton.setIcon(QtGui.QIcon('../images/del Button.png'))
+        self.delButton.setIcon(QtGui.QIcon(os.path.join(self.dir, '../images/del Button.png')))
         self.delButton.setIconSize(QtCore.QSize(20,20))
         self.delButton.setFlat(True)
         self.delButton.hide()
