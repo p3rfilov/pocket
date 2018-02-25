@@ -1,5 +1,6 @@
 import os
-from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QListWidget
+from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QListWidget, QSystemTrayIcon, QAction, QMenu, qApp
+from PyQt5 import QtCore
 from PyQt5.uic import loadUi
 
 class mainWindow(QMainWindow):
@@ -12,6 +13,30 @@ class mainWindow(QMainWindow):
         self.ui.list_items.setSizeAdjustPolicy(QListWidget.AdjustToContents)
         self.ui.list_items.itemClicked.connect(self.expandCurrentItem)
         
+        # tray icon
+        self.ui.closeEvent = self.minimizeToTray # minimize to Tray instead of closing
+        
+        self.tray_icon = QSystemTrayIcon(self)
+        self.tray_icon.setIcon(self.ui.windowIcon())
+        self.tray_icon.setToolTip('pocket')
+        
+        quit_action = QAction("Exit", self)
+        self.tray_icon.activated.connect(self.trayIconClick)
+        quit_action.triggered.connect(qApp.quit)
+        tray_menu = QMenu()
+        tray_menu.addAction(quit_action)
+        
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
+    
+    def minimizeToTray(self, event):
+        event.ignore()
+        self.ui.hide()
+        
+    def trayIconClick(self, reason):
+        if reason == QSystemTrayIcon.Trigger:
+            self.ui.show()
+        
     def addNewRow(self, widget):
         listItem = QListWidgetItem()
         listItem.setSizeHint(widget.sizeHint())
@@ -19,17 +44,20 @@ class mainWindow(QMainWindow):
         self.setCurrentRow(0)
         self.ui.list_items.setItemWidget(listItem, widget)
         
-    def expandCurrentItem(self):
+    def expandCurrentItem(self, toggleMode=True):
         self.closeInactiveItems()
         item = self.getCurrentItem()
         widget = self.getItemWidget(item)
-        widget.toggleWidgetTextField() # ui_dataWidget method
+        if toggleMode:
+            widget.toggleWidgetTextField() # ui_dataWidget method
+        else:
+            widget.toggleWidgetTextField(persistent=True) # ui_dataWidget method
         item.setSizeHint(widget.sizeHint())
         
-    def closeInactiveItems(self):
+    def closeInactiveItems(self, closeAll=False):
         count = self.getRowCount()
         for row in range(count):
-            if row != self.getCurrentRow():
+            if row != self.getCurrentRow() or closeAll:
                 item = self.getItem(row)
                 widget = self.getItemWidget(item)
                 widget.toggleWidgetTextField(setHidden=True) # ui_dataWidget method

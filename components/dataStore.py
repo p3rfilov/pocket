@@ -1,6 +1,5 @@
 import os
 import sqlite3
-from collections import namedtuple
 
 class dataStore():
     '''This class provides the data storage and retrieval interface.'''
@@ -40,8 +39,7 @@ class dataStore():
                           .format(f=self.head, n=name) )
             return True
         except:
-            print('Name already exists!')
-            return False
+            return False # this record already exists
     
     def deleteRecord(self, name):
         try:

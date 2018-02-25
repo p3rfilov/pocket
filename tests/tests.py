@@ -59,7 +59,7 @@ class TestUI(unittest.TestCase):
             self.widget.setName(self.data['name'] + str(i))
             self.widget.setNotes(self.data['data'] + str(i))
             self.window.addNewRow(self.widget)
-        self.RUN_LOOP()
+#         self.RUN_LOOP()
             
     def testCheckPocketParameters(self):
         count = self.window.getRowCount()

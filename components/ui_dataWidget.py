@@ -54,11 +54,15 @@ class dataWidget(QWidget):
         self.layout2.setSizeConstraint(QLayout.SetFixedSize)
         self.setLayout(self.layout1)
         
-    def toggleWidgetTextField(self, setHidden=False):
-        if not setHidden and self.textEdit.isHidden():
+    def toggleWidgetTextField(self, setHidden=False, persistent=False):
+        def showAll():
             self.textEdit.show()
             self.delButton.show()
             self.editButton.show()
+        
+        if persistent: showAll()
+        elif not setHidden and self.textEdit.isHidden():
+            showAll()
         else:
             self.setEditState(False)
             self.textEdit.hide()
@@ -94,6 +98,7 @@ class dataWidget(QWidget):
             
     def getEditState(self):
         return self.editState
+        
     
 if __name__ == '__main__':
     import sys

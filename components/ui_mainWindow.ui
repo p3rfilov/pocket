@@ -10,8 +10,15 @@
     <height>526</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>pocket</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../images/pocket.ico</normaloff>../images/pocket.ico</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -144,7 +151,7 @@
       <item>
        <widget class="QPushButton" name="btn_searchPrev">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -156,14 +163,27 @@
          </size>
         </property>
         <property name="text">
-         <string>&lt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../images/arrowLeft.png</normaloff>../images/arrowLeft.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btn_searchNext">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -175,7 +195,20 @@
          </size>
         </property>
         <property name="text">
-         <string>&gt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../images/arrowRight.png</normaloff>../images/arrowRight.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -187,6 +220,9 @@
        <bool>true</bool>
       </property>
       <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="acceptDrops">
        <bool>true</bool>
       </property>
       <property name="frameShape">
