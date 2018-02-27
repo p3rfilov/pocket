@@ -13,7 +13,7 @@ class dataWidget(QWidget):
         
         self.delButton = QPushButton('')
         self.delButton.setMaximumSize(23, 23)
-        self.delButton.setIcon(QtGui.QIcon(os.path.join(self.dir, '../images/del Button.png')))
+        self.delButton.setIcon(QtGui.QIcon(os.path.join(self.dir, 'icons/del Button.png')))
         self.delButton.setIconSize(QtCore.QSize(20,20))
         self.delButton.setFlat(True)
         self.delButton.hide()
@@ -24,15 +24,15 @@ class dataWidget(QWidget):
         self.textEdit.hide()
         
         self.editButton = QPushButton('edit')
-        self.editButton.setMaximumSize(45, 20)
+        self.editButton.setMaximumSize(50, 20)
         self.editButton.hide()
         
         self.okButton = QPushButton('ok')
-        self.okButton.setMaximumSize(45, 20)
+        self.okButton.setMaximumSize(50, 20)
         self.okButton.hide()
         
         self.cancelButton = QPushButton('cancel')
-        self.cancelButton.setMaximumSize(45, 20)
+        self.cancelButton.setMaximumSize(50, 20)
         self.cancelButton.hide()
         
         self.layout1 = QVBoxLayout()

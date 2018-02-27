@@ -1,9 +1,9 @@
 import os
 import atexit
-from components.ui_dataWidget import dataWidget
-from components.ui_mainWindow import mainWindow
-from components.ui_Message import Message
-from components.dataStore import dataStore
+from ui_dataWidget import dataWidget
+from ui_mainWindow import mainWindow
+from ui_Message import Message
+from dataStore import dataStore
 
 class Settings():
     appName = 'pocket'
@@ -42,7 +42,7 @@ class pocket_main():
                 self.addPocket(rowData)
         else: 
             for data in allData: self.addPocket(data)
-            Message().rowOrderFail()
+#             Message().rowOrderFail()
     
     def integrityCheck(self, data, names):
         if len(data) == len(names):
@@ -118,9 +118,10 @@ class pocket_main():
         for row in range(self.window.getRowCount()):
             item = self.window.getItem(row)
             widget = self.window.getItemWidget(item)
-            name = widget.getName()
-            notes = widget.getNotes()
-            if not self.window.ui.search.text() in name + notes:
+            name = widget.getName().lower()
+            notes = widget.getNotes().lower()
+            text = self.window.ui.search.text().lower()
+            if not text in name + notes:
                 item.setHidden(True)
             else:
                 item.setHidden(False)

@@ -80,7 +80,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../images/add Button.png</normaloff>../images/add Button.png</iconset>
+          <normaloff>images/add Button.png</normaloff>images/add Button.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -167,7 +167,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../images/arrowLeft.png</normaloff>../images/arrowLeft.png</iconset>
+          <normaloff>images/arrowLeft.png</normaloff>images/arrowLeft.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -199,7 +199,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../images/arrowRight.png</normaloff>../images/arrowRight.png</iconset>
+          <normaloff>images/arrowRight.png</normaloff>images/arrowRight.png</iconset>
         </property>
         <property name="iconSize">
          <size>

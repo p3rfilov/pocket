@@ -39,7 +39,7 @@ class dataStore():
                           .format(f=self.head, n=name) )
             return True
         except:
-            return False # this record already exists
+            return False # contains illegal characters or this record already exists
     
     def deleteRecord(self, name):
         try:

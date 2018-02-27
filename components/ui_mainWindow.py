@@ -1,19 +1,25 @@
 import os
 from PyQt5.QtWidgets import QMainWindow, QListWidgetItem, QListWidget, QSystemTrayIcon, QAction, QMenu, qApp
-from PyQt5 import QtCore
+from PyQt5 import QtGui
 from PyQt5.uic import loadUi
 
 class mainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.dir = os.path.dirname(__file__)
-        self.ui = loadUi(os.path.join(self.dir, 'ui_mainWindow.ui'))
+        self.ui = loadUi(os.path.join(self.dir, 'ui/ui_mainWindow.ui'))
         self.ui.show()
         
         self.ui.list_items.setSizeAdjustPolicy(QListWidget.AdjustToContents)
         self.ui.list_items.itemClicked.connect(self.expandCurrentItem)
         
-        # tray icon
+        # set icons
+        self.ui.setWindowIcon(QtGui.QIcon(os.path.join(self.dir, 'icons/pocket.ico')))
+        self.ui.btn_addPocket.setIcon(QtGui.QIcon(os.path.join(self.dir, 'icons/add Button.png')))
+        self.ui.btn_searchPrev.setIcon(QtGui.QIcon(os.path.join(self.dir, 'icons/arrowLeft.png')))
+        self.ui.btn_searchNext.setIcon(QtGui.QIcon(os.path.join(self.dir, 'icons/arrowRight.png')))
+        
+        # display icon in system tray
         self.ui.closeEvent = self.minimizeToTray # minimize to Tray instead of closing
         
         self.tray_icon = QSystemTrayIcon(self)
