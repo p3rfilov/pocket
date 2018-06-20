@@ -2,7 +2,32 @@ import os
 import sqlite3
 
 class dataStore():
-    '''This class provides the data storage and retrieval interface.'''
+    '''
+    This class provides the data storage and retrieval interface.
+    
+    Usage:
+    # data store location
+    location = '../someLocation/database.db'
+    
+    # columns of your choice (digits in column names are not supported)
+    columns = ('name','columnA','columnB')
+    
+    # create data store
+    dStore = dataStore(location, columns)
+    
+    # create new record (duplicate names are not allowed)
+    dStore.createRecord('Record1') # create new record 'Record1'
+    
+    # write data by passing a tuple of positional arguments
+    dStore.write(('Record1','columnA data','columnB data'))
+    
+    # read data by passing the record name
+    # returns a list of dictionaries
+    result = dStore.readFrom('Record1')
+    
+    # delete a record by name
+    dStore.deleteRecord('Record1')
+    '''
     def __init__(self, location, fields):
         self.location = str(location)
         self.fields = fields
